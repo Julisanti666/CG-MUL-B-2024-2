@@ -1,83 +1,22 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cubo en Three.js</title>
-    <style>
-        body { margin: 0; }
-        canvas { display: block; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejemplo Three.js - Cubos Blancos Centrados</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
 </head>
 <body>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/examples/js/controls/OrbitControls.js"></script>
-    <script>
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        
-        const renderer = new THREE.WebGLRenderer();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
-        
-        // Añade controles de órbita
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        
-        // Recupera el número de cubos del localStorage o inicializa en 1 si no existe
-        let numCubes = localStorage.getItem('numCubes') ? parseInt(localStorage.getItem('numCubes')) : 1;
-        
-        // Limita el número máximo de cubos a 5
-        if (numCubes > 5) {
-            numCubes = 5;
-        }
-        
-        // Guarda el nuevo número de cubos en el localStorage, asegurando que no exceda 5
-        localStorage.setItem('numCubes', Math.min(numCubes + 1, 5));
-        
-        // Arreglo para los cubos generados
-        const cubes = [];
-        let currentCube = 0;  // Para contar cuántos cubos se han añadido
-        
-        // Función para añadir un cubo a la escena
-        function addCube() {
-            if (currentCube < numCubes) {
-                const geometry = new THREE.BoxGeometry(1, 1, 1);
-                const material = new THREE.MeshBasicMaterial({ color: Math.random() * 0xffffff }); // Color aleatorio
-                const cube = new THREE.Mesh(geometry, material);
-        
-                // Alineación en el eje X, dejando un espacio de 1.5 entre cubos
-                cube.position.x = currentCube * 1.5;
-        
-                scene.add(cube);
-                cubes.push(cube);
-                currentCube++;  // Incrementa el número de cubos añadidos
-            }
-        }
-        
-        // Añade los cubos de uno en uno con un intervalo
-        const cubeInterval = setInterval(() => {
-            if (currentCube >= numCubes) {
-                clearInterval(cubeInterval);  // Detiene el intervalo cuando todos los cubos han sido añadidos
-            } else {
-                addCube();  // Añade un cubo
-            }
-        }, 1000);  // Intervalo de 1 segundo
-        
-        camera.position.z = 10;
-        
-        function animate() {
-            cubes.forEach(cube => {
-                cube.rotation.x += 0.01;
-                cube.rotation.y += 0.01;
-            });
-        
-            controls.update(); // Actualiza los controles de órbita
-            renderer.render(scene, camera);
-        }
-        
-        // Inicia la animación
-        renderer.setAnimationLoop(animate);
-        
-    </script>
+  <!-- Incluimos la librería de Three.js desde su CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+  
+  <script src="cuborotando.js">
+
+  </script>
 </body>
 </html>
